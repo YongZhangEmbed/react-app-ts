@@ -1,23 +1,35 @@
 import React from 'react';
 import { FilmPoster } from './index';
 import { IFilm } from '../../type/IFilm';
-import { Grid } from '@material-ui/core';
+import { Grid, WithStyles, withStyles, createStyles } from '@material-ui/core';
+
+const styles = () => createStyles({
+    filmRow: {
+        position: 'relative',
+        marginBottom: '0.2rem',
+        fontSize: '0.5em',
+        backgroundColor: 'white',
+    }
+});
 
 interface IFormProps {
     film: IFilm;
 }
 
-class FilmRow extends React.Component<IFormProps> {
+type AllProps = IFormProps & WithStyles<typeof styles>;
+
+class FilmRowImp extends React.Component<AllProps> {
 
     getFullYear = (release_date: string) => {
         return new Date(release_date).getFullYear();
     }
 
     render() {
-        const { film } = this.props;
+        console.log(this.props);
+        const { film, classes } = this.props;
 
         return (
-            <div key={film.id} className="film-row">
+            <div key={film.id} className={classes.filmRow}>
                 <Grid container direction="row" justify="flex-start" alignItems="center">
                     <Grid item sm={8} md={8} lg={8} xl={8}>
                         <FilmPoster film={film}></FilmPoster>
@@ -34,4 +46,4 @@ class FilmRow extends React.Component<IFormProps> {
     }
 }
 
-export { FilmRow }
+export const FilmRow = withStyles(styles)(FilmRowImp);

@@ -9,7 +9,6 @@ interface IFormProps {
 class FilmListing extends React.Component<IFormProps> {
 
     render() {
-        console.log(this.props);
         const allFilms = this.props.films.map((film, idx) => {
             return <FilmRow film={film} key={idx}></FilmRow>
         });
