@@ -3,6 +3,7 @@ import { FilmPoster } from './index';
 import { IFilm } from '../../type/IFilm';
 import { Grid, WithStyles, withStyles, createStyles } from '@material-ui/core';
 import { compose } from 'recompose';
+import withCopyRight from '../../withCopyRight';
 
 const styles = () => createStyles({
     filmRow: {
@@ -26,7 +27,7 @@ class FilmRowImp extends React.Component<AllProps> {
     }
 
     render() {
-        // console.log(JSON.stringify(this.props, null, 4));
+        console.log(JSON.stringify(this.props, null, 4));
         const { film, classes } = this.props;
 
         return (
@@ -47,4 +48,6 @@ class FilmRowImp extends React.Component<AllProps> {
     }
 }
 
-export const FilmRow = compose<AllProps, IFormProps>(withStyles(styles))(FilmRowImp);
+const WrappedComponent = withCopyRight(FilmRowImp);
+
+export const FilmRow = compose<AllProps, IFormProps>(withStyles(styles))(WrappedComponent);
