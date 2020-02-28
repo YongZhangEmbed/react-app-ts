@@ -4,6 +4,8 @@ import { IFilm } from '../../type/IFilm';
 import { Grid, WithStyles, withStyles, createStyles } from '@material-ui/core';
 import { compose } from 'recompose';
 import withCopyRight from '../../withCopyRight';
+import { CustomTextInput } from '../controls';
+import { Login } from '../common';
 
 const styles = () => createStyles({
     filmRow: {
@@ -21,13 +23,27 @@ interface IFormProps {
 type AllProps = IFormProps & WithStyles<typeof styles>;
 
 class FilmRowImp extends React.Component<AllProps> {
+    private refInput: any;
+    constructor(props: any) {
+        super(props)
+        this.refInput = React.createRef();
+    }
 
     getFullYear = (release_date: string) => {
         return new Date(release_date).getFullYear();
     }
 
+    focusTextInput = () => {
+        // Focus the text input using the raw DOM API
+        if (this.refInput) this.refInput.focus();
+    };
+
+    componentDidMount() {
+        this.refInput.current!.focusTextInput();
+    }
+
     render() {
-        console.log(JSON.stringify(this.props, null, 4));
+        // console.log(JSON.stringify(this.props, null, 4));
         const { film, classes } = this.props;
 
         return (
@@ -40,6 +56,8 @@ class FilmRowImp extends React.Component<AllProps> {
                         <div className="film-summary">
                             <h1>{film.title}</h1>
                             <p>{this.getFullYear(film.release_date)}</p>
+                            <CustomTextInput ref={this.refInput}></CustomTextInput>
+                            <Login />
                         </div>
                     </Grid>
                 </Grid>

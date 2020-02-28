@@ -2,7 +2,7 @@ import React from 'react';
 
 const withCopyRight = (WarrppedComponent) => {
 
-    class HOC extends React.Component {
+    class enhancedComponent extends React.Component {
         render() {
             return (<WarrppedComponent
                 {...this.props}
@@ -10,7 +10,7 @@ const withCopyRight = (WarrppedComponent) => {
             </WarrppedComponent>)
         }
     }
-    return HOC;
+    return enhancedComponent;
 };
 
 export default withCopyRight;
