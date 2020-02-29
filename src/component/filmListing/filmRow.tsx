@@ -66,6 +66,8 @@ class FilmRowImp extends React.Component<AllProps> {
     }
 }
 
+// using hoc directly
+// export const FilmRow = withStyles(styles)(withCopyRight(FilmRowImp));
+// using compose
 const WrappedComponent = withCopyRight(FilmRowImp);
-
 export const FilmRow = compose<AllProps, IFormProps>(withStyles(styles))(WrappedComponent);
