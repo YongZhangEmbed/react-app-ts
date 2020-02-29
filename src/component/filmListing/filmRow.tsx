@@ -6,6 +6,8 @@ import { compose } from 'recompose';
 import withCopyRight from '../../withCopyRight';
 import { CustomTextInput } from '../controls';
 import { Login } from '../common';
+import { inject, observer } from 'mobx-react';
+import { IWithStores } from '../../store/rootStore'
 
 const styles = () => createStyles({
     filmRow: {
@@ -20,8 +22,11 @@ interface IFormProps {
     film: IFilm;
 }
 
-type AllProps = IFormProps & WithStyles<typeof styles>;
+type AllProps = IFormProps & WithStyles<typeof styles> & IWithStores;
 
+
+@inject('rootStore')
+@observer
 class FilmRowImp extends React.Component<AllProps> {
     private refInput: any;
     constructor(props: any) {
@@ -38,12 +43,17 @@ class FilmRowImp extends React.Component<AllProps> {
         if (this.refInput) this.refInput.focus();
     };
 
+    handleClick = () => {
+        this.props.rootStore.filmStore.setFileName("Schooling:" + Math.random())
+        console.log(`this.props.rootStore.filmStore.filmName:${this.props.rootStore.filmStore.filmName}`)
+    }
+
     componentDidMount() {
         this.refInput.current!.focusTextInput();
     }
 
     render() {
-        // console.log(JSON.stringify(this.props, null, 4));
+        console.log(JSON.stringify(this.props, null, 4));
         const { film, classes } = this.props;
 
         return (
@@ -58,6 +68,8 @@ class FilmRowImp extends React.Component<AllProps> {
                             <p>{this.getFullYear(film.release_date)}</p>
                             <CustomTextInput ref={this.refInput}></CustomTextInput>
                             <Login />
+                            <p>{this.props.rootStore.filmStore.filmName}</p>
+                            <button onClick={this.handleClick}>Change FilmName</button>
                         </div>
                     </Grid>
                 </Grid>
